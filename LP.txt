@@ -1,0 +1,38 @@
+import requests
+from bs4 import BeautifulSoup
+import pandas
+
+
+url = 'https://www.worldofbooks.com/en-gb/'#pagina Web
+my_headers={"User-Agent":"Mozilla/5.0"}#ne ajuta sa ne logam pe site si sa vada ca nu suntem roboti
+page=requests.get(url,headers=my_headers)
+soup=BeautifulSoup(page.content,'html.parser')#parseaza codul web
+
+
+
+
+a = soup.find('div')#in a se afla toate informatiile din div
+columns=[]#initializam o lista
+
+for books in a.find_all(class_="productRow"):#in b se afla toate informatiile din class_="productRow"
+
+ columns.append([tr.text for tr in books.find_all(class_="itemTitle mt-2")]) #facem o lista cu toate elemetele de tip text din class_="itemTitle mt-2"
+
+
+
+
+df = pandas.DataFrame({
+    "Bestselling Fiction Books":columns[0],
+    "Bestselling Non-Fiction Books":columns[1],
+    "Bestselling Children's Books":columns[2]
+})
+#facem un fisier pandas
+print(df)
+
+
+
+
+df.to_csv('Books.csv', encoding='utf-8-sig')#din fisier pandas transformam in csv
+
+
+

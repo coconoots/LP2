@@ -1,0 +1,27 @@
+
+from tkinter import *
+import pandas
+df = pandas.read_csv('Books.csv')
+print(df)
+root = Tk()
+T = Text(root, height=25, width=100)
+T.pack()
+root.title('Books')
+T.insert(END, "Bestselling Fiction Books:" +"\n")
+for i in range (0,5):
+
+ T.insert(END, df["Bestselling Fiction Books"][i]+"\n")
+T.insert(END,"\n")
+T.insert(END, "Bestselling Non-Fiction Books:" + "\n")
+for i in range(0, 5):
+     T.insert(END, df["Bestselling Non-Fiction Books"][i] + "\n")
+T.insert(END,"\n")
+
+
+T.insert(END, "Bestselling Children's Books:" +"\n")
+for i in range (0,5):
+
+ T.insert(END, df["Bestselling Children's Books"][i]+"\n")
+
+
+mainloop()
